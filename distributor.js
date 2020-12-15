@@ -1,4 +1,7 @@
+'use strict';
+
 var map = {};
+
 class distributor extends require('./server') {
     constructor() {
         super("distributor", 9000, ["POST/distributor", "GET/distributes"]);
