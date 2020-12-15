@@ -1,7 +1,7 @@
 'use strict';
 
 // 비즈니스로직 파일 참조
-const business = require('../chapter5/monolithic_purchases.js');
+const business = require('../nodejs-monolithicAPI/monolithic_purchases');
 
 // Server클래스 참조
 class purchases extends require('./server.js') {

@@ -20,11 +20,13 @@ class tcpServer {
 
             // 에러 이벤트
             socket.on('error', (exception) => {
+                console.log('server on error : 에러 이벤트');
                 this.onClose(socket);
             });
 
             // 클라이언트 접속 종료 이벤트
             socket.on('close', () => {
+                console.log('server on close : 클라이언트 접속 종료 이벤트');
                 this.onClose(socket);
             });
 
@@ -43,26 +45,28 @@ class tcpServer {
                         this.onRead(socket, JSON.parse(arr[n]));
                     }
                 }
+                console.log('server on data : 데이터 수신 이벤트');
             });
         });
 
         // 서버 객체 에러 이벤트
         this.server.on('error', (err) => {
-            console.log(err);
+            console.log(`server on error : ${err}`);
         });
 
         // 리슨 
         this.server.listen(port, () => {
-            console.log('listen', this.server.address());
+            console.log('server listen', this.server.address());
         });
     }
 
+
     onCreate(socket) {
-        console.log("onCreate", socket.remoteAddress, socket.remotePort);
+        console.log("# server onCreate", socket.remoteAddress, socket.remotePort);
     }
 
     onClose(socket) {
-        console.log("onClose", socket.remoteAddress, socket.remotePort);
+        console.log("# server onClose", socket.remoteAddress, socket.remotePort);
     }
  
     // Distributor 접속 함수
@@ -92,6 +96,7 @@ class tcpServer {
         // 주기적으로 재접속 시도
         setInterval(() => {
             if (isConnectedDistributor != true) {
+                console.log('주기적인 재접속 시도');
                 this.clientDistributor.connect();
             }
         }, 3000);

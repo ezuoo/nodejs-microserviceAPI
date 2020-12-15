@@ -15,15 +15,18 @@ class tcpClient{
         this.onRead = onRead;
         this.onEnd = onEnd;
         this.onError = onError;
+        console.log('client contructor');
     }
 
     /*
     * 접속 함수
     */
    connect() {       
-        this.client = net.connect(this.options, () => {
-            if (this.onCreate)
-                this.onCreate(this.options);            
+        this.client = net.connect(this.option, () => {
+            if (this.onCreate){
+                console.log('client onCreate'); 
+                this.onCreate(this.option);
+            }                
         });
 
         // 데이터 수신 처리
@@ -39,19 +42,26 @@ class tcpClient{
                 } else {
                     this.onRead(this.options, JSON.parse(arr[n]));
                 }
-            }            
+            } 
+            console.log('client on data :  데이터 수신 처리');           
         });
 
         // 접속 종료 처리
         this.client.on('close', () => {
-            if (this.onEnd)
+            if (this.onEnd){
+                console.log("client class 접속 종료 처리");
                 this.onEnd(this.options);
+            }
+                
         });
 
     // 에러 처리
         this.client.on('error', (err) => {
-            if (this.onError)
+            if (this.onError) {
+                console.log("client class 에러 처리");
                 this.onError(this.options, err);
+            }
+               
         });
     }
 
