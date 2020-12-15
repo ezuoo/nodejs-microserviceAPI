@@ -1,4 +1,7 @@
 'use strict';
+/**
+ *  구매 관리 마이크로서비스 실행 
+ */
 
 // 비즈니스로직 파일 참조
 const business = require('../nodejs-monolithicAPI/monolithic_purchases');

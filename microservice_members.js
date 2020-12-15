@@ -1,4 +1,7 @@
 'use strict';
+/**
+ *  회원 관리 마이크로 서비스 실행
+ */
 
 const business = require('../nodejs-monolithicAPI/monolithic_members');
 

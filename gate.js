@@ -1,4 +1,7 @@
-'use strict'
+'use strict';
+/**
+ *  API 호출을 받아들이는 게이트웨이
+ */
 const http = require('http');
 const url = require('url');
 const querystring = require('querystring');

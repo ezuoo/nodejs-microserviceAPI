@@ -1,7 +1,9 @@
-'use strict'
-/*
-* distributor
-*/
+'use strict';
+
+/**
+ * 모든 마이크로 서비스가 접속
+ */
+
 // 접속 노드 관리 오브젝트
 var map = {};
 
