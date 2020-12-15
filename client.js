@@ -11,6 +11,7 @@ class tcpClient{
             host: host,
             port: port
         };
+         
         this.onCreate = onCreate;
         this.onRead = onRead;
         this.onEnd = onEnd;
@@ -24,7 +25,7 @@ class tcpClient{
    connect() {       
         this.client = net.connect(this.option, () => {
             if (this.onCreate){
-                console.log('client onCreate'); 
+                console.log('client onCreate : 접속 완료'); 
                 this.onCreate(this.option);
             }                
         });
@@ -33,6 +34,9 @@ class tcpClient{
         this.client.on('data', (data) => {            
             var sz = this.merge ? this.merge + data.toString() : data.toString();
             var arr = sz.split('¶');
+            console.log(`client on 'data' 
+            sz : ${sz} 
+            arr : ${arr}`);
             for (var n in arr) {
                 if (sz.charAt(sz.length - 1) != '¶' && n == arr.length - 1) {
                     this.merge = arr[n];
@@ -40,7 +44,7 @@ class tcpClient{
                 } else if (arr[n] == "") {
                     break;
                 } else {
-                    this.onRead(this.options, JSON.parse(arr[n]));
+                    this.onRead(this.option, JSON.parse(arr[n]));
                 }
             } 
             console.log('client on data :  데이터 수신 처리');           
@@ -50,7 +54,7 @@ class tcpClient{
         this.client.on('close', () => {
             if (this.onEnd){
                 console.log("client class 접속 종료 처리");
-                this.onEnd(this.options);
+                this.onEnd(this.option);
             }
                 
         });
@@ -59,7 +63,7 @@ class tcpClient{
         this.client.on('error', (err) => {
             if (this.onError) {
                 console.log("client class 에러 처리");
-                this.onError(this.options, err);
+                this.onError(this.option, err);
             }
                
         });
@@ -69,6 +73,7 @@ class tcpClient{
     * 데이터 발송 
     */
     write(packet) {
+        console.log('client write : 데이터 전송' , JSON.stringify(packet) + '¶');
         this.client.write(JSON.stringify(packet) + '¶');
     }
 }

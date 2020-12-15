@@ -14,6 +14,7 @@ class distributor extends require('./server.js') {
         console.log('# distributor contructor');
         super("distributor", 9000, ["POST/distributes", "GET/distributes"]);
     }
+
     // 노드 접속 이벤트 처리
     onCreate(socket) {
          console.log("distributor onCreate : 노드 접속 이벤트 처리"
@@ -65,6 +66,7 @@ class distributor extends require('./server.js') {
             };
 
             for (var n in map) {
+                console.log(`map[${n}].info : `, map[n].info);
                 packet.params.push(map[n].info);
             }
 

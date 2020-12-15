@@ -56,7 +56,7 @@ var server = http.createServer((req, res) => {
         };
         console.log('gate packet : ', packet);
         var isConnectedDistributor = false;
-
+        //
         this.clientDistributor = new tcpClient(
             "127.0.0.1"
             , 9000
@@ -92,6 +92,7 @@ function onRequest(res, method, pathname, params) {
     } else {
         console.log(`gate onRequest : client is not null`);
         params.key = index;                             // API호출에 대한 고유 키값 설정
+
         var packet = {
             uri: pathname,
             method: method,           
@@ -99,13 +100,15 @@ function onRequest(res, method, pathname, params) {
         };
 
         mapResponse[index] = res;
+
         index++;
-        if (mapRR[key] == null)                         // 라운드 로빈 처리
+
+        if (mapRR[key] == null) {                           // 라운드 로빈 처리
             mapRR[key] = 0;
+        } 
         mapRR[key]++;
         client[mapRR[key] % client.length].write(packet);
     }
-
 }
 
 // Distributor 접속 처리

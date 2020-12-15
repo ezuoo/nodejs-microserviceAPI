@@ -20,13 +20,13 @@ class tcpServer {
 
             // 에러 이벤트
             socket.on('error', (exception) => {
-                console.log('server on error : 에러 이벤트');
+                console.log('server socket on error : 에러 이벤트');
                 this.onClose(socket);
             });
 
             // 클라이언트 접속 종료 이벤트
             socket.on('close', () => {
-                console.log('server on close : 클라이언트 접속 종료 이벤트');
+                console.log('server socket on close : 클라이언트 접속 종료 이벤트');
                 this.onClose(socket);
             });
 
@@ -35,6 +35,10 @@ class tcpServer {
                 var key = socket.remoteAddress + ":" + socket.remotePort;
                 var sz = this.merge[key] ? this.merge[key] + data.toString() : data.toString();
                 var arr = sz.split('¶');
+                console.log(`server socket on 'data' 
+                key : ${key} 
+                sz : ${sz} 
+                arr : ${arr}`);
                 for (var n in arr) {
                     if (sz.charAt(sz.length - 1) != '¶' && n == arr.length - 1) {
                         this.merge[key] = arr[n];
@@ -45,7 +49,7 @@ class tcpServer {
                         this.onRead(socket, JSON.parse(arr[n]));
                     }
                 }
-                console.log('server on data : 데이터 수신 이벤트');
+                console.log('server socket on data : 데이터 수신 이벤트');
             });
         });
 

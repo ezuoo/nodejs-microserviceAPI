@@ -29,20 +29,16 @@ function request(cb, params) {
     req.end();
 }
 
-
 /**
  * 상품 관리 API 테스트
  */
-
 function goods(callback) {    
     goods_post(() => {
         goods_get(() => {
             goods_delete(callback);
         });
     });
-    
-    
-
+  
     function goods_post(cb) {        
         options.method = "POST";
         options.path = "/goods";
